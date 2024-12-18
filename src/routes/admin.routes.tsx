@@ -6,7 +6,7 @@ import { ReactNode } from "react";
 import { NavLink } from "react-router-dom";
 import CreateMember from "../pages/admin/CreateMember";
 
-const adminPaths2 = [
+export const adminPaths = [
   {
     name: "Dashboard",
     path: "dashboard",
@@ -38,32 +38,29 @@ const adminPaths2 = [
     ],
   },
 ];
-type AdminRoute = {
-  path: string;
-  element: JSX.Element;
-};
+
 type AdminNavLink = {
   key: string;
   label: ReactNode;
   children?: AdminNavLink[];
 };
 
-export const adminRoutes = adminPaths2.reduce<AdminRoute[]>((acc, item) => {
-  if (item.path && item.element) {
-    acc.push({
-      path: item.path,
-      element: item.element,
-    });
-  }
-  if (item.children) {
-    item.children.forEach((child) => {
-      acc.push({ path: child.path, element: child.element });
-    });
-  }
-  return acc;
-}, []);
+// export const adminRoutes = adminPaths2.reduce<AdminRoute[]>((acc, item) => {
+//   if (item.path && item.element) {
+//     acc.push({
+//       path: item.path,
+//       element: item.element,
+//     });
+//   }
+//   if (item.children) {
+//     item.children.forEach((child) => {
+//       acc.push({ path: child.path, element: child.element });
+//     });
+//   }
+//   return acc;
+// }, []);
 
-export const navLinkRoutes = adminPaths2.reduce<AdminNavLink[]>((acc, item) => {
+export const navLinkRoutes = adminPaths.reduce<AdminNavLink[]>((acc, item) => {
   if (item.path && item.name) {
     acc.push({
       key: item.name,
