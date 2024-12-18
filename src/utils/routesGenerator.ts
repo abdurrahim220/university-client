@@ -1,19 +1,7 @@
-import { ReactNode } from "react";
+import { RouteType, SideBarPath } from "../types/router.types";
 
-type AdminRoute = {
-  path: string;
-  element: ReactNode;
-};
-
-type TRouterPath = {
-  name?: string;
-  path?: string;
-  element?: ReactNode;
-  children?: TRouterPath[];
-};
-
-export const routerGenerator = (items: TRouterPath[]) => {
-  const routes = items.reduce<AdminRoute[]>((acc, item) => {
+export const routerGenerator = (items: SideBarPath[]) => {
+  const routes = items.reduce<RouteType[]>((acc, item) => {
     if (item.path && item.element) {
       acc.push({
         path: item.path,

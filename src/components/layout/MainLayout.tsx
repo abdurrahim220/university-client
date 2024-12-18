@@ -1,6 +1,8 @@
 import { Layout, Menu } from "antd";
 import {  Outlet } from "react-router-dom";
-import { navLinkRoutes } from "../../routes/admin.routes";
+import { adminPaths } from "../../routes/admin.routes";
+import { SidebarLinks } from "../../utils/sidebarLinkGenerator";
+
 const { Header, Content, Footer, Sider } = Layout;
 
 // const items: MenuProps["items"] = [
@@ -29,7 +31,10 @@ const { Header, Content, Footer, Sider } = Layout;
 //     ],
 //   },
 // ];
+const role = "admin";
+const adminSidebarLinks = SidebarLinks(adminPaths, role);
 
+// console.log(adminSidebarLinks);
 const MainLayout = () => {
   return (
     <Layout style={{ height: "100vh" }}>
@@ -56,7 +61,7 @@ const MainLayout = () => {
           theme="dark"
           mode="inline"
           defaultSelectedKeys={["4"]}
-          items={navLinkRoutes}
+          items={adminSidebarLinks}
         />
       </Sider>
       <Layout>
