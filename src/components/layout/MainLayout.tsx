@@ -1,69 +1,13 @@
-import { Layout, Menu } from "antd";
-import {  Outlet } from "react-router-dom";
-import { adminPaths } from "../../routes/admin.routes";
-import { SidebarLinks } from "../../utils/sidebarLinkGenerator";
+import { Layout } from "antd";
+import { Outlet } from "react-router-dom";
+import SideBarLayout from "./SideBarLayout";
 
-const { Header, Content, Footer, Sider } = Layout;
+const { Header, Content } = Layout;
 
-// const items: MenuProps["items"] = [
-//   {
-//     key: "Dashboard",
-//     label: <NavLink to='/admin/dashboard'>Dashboard</NavLink>,
-//   },
-//   {
-//     key: "User Management",
-//     label: "User Management",
-  
-//     children: [
-//       {
-//         key: "Create Admin",
-//         label: <NavLink to="/admin/create-admin">Create Admin</NavLink>,
-//       },
-//       {
-//         key: "Create Faculty",
-//         label: <NavLink to="/admin/create-faculty">Create Faculty</NavLink>,
-//       },
-//       {
-//         key: "Create Student",
-//         label: <NavLink to="/admin/create-student">Create Student</NavLink>,
-//       },
-      
-//     ],
-//   },
-// ];
-const role = "admin";
-const adminSidebarLinks = SidebarLinks(adminPaths, role);
-
-// console.log(adminSidebarLinks);
 const MainLayout = () => {
   return (
     <Layout style={{ height: "100vh" }}>
-      <Sider
-        breakpoint="lg"
-        collapsedWidth="0"
-        onBreakpoint={(broken) => {
-          console.log(broken);
-        }}
-        onCollapse={(collapsed, type) => {
-          console.log(collapsed, type);
-        }}
-      >
-        <div style={{color:'white',
-             textAlign:"center",
-             display:"flex",
-             justifyContent:"center",
-             alignItems:"center",
-             height:"4rem"
-        }}>
-            <h1>Ph Uni</h1>
-        </div>
-        <Menu
-          theme="dark"
-          mode="inline"
-          defaultSelectedKeys={["4"]}
-          items={adminSidebarLinks}
-        />
-      </Sider>
+      <SideBarLayout />
       <Layout>
         <Header style={{ padding: 0 }} />
         <Content style={{ margin: "24px 16px 0" }}>
@@ -73,12 +17,9 @@ const MainLayout = () => {
               minHeight: 360,
             }}
           >
-            <Outlet/>
+            <Outlet />
           </div>
         </Content>
-        <Footer style={{ textAlign: "center" }}>
-          Ant Design ©{new Date().getFullYear()} Created by Ant UED
-        </Footer>
       </Layout>
     </Layout>
   );
