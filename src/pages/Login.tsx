@@ -1,30 +1,54 @@
 import { Button } from "antd";
-import { useForm } from "react-hook-form";
+import { FieldValues, useForm } from "react-hook-form";
 import { useLoginMutation } from "../redux/features/auth/authApi";
 import { useAppDispatch } from "../redux/hooks";
-import { setUser } from "../redux/features/auth/authSlice";
+import { setUser, TUser } from "../redux/features/auth/authSlice";
 import { verifyToken } from "../utils/verifyToken";
+import { useNavigate } from "react-router-dom";
+import { toast } from "sonner";
 
 const Login = () => {
+  const navigate = useNavigate();
   const dispatch = useAppDispatch();
-  const { register, handleSubmit } = useForm();
-  const [login, { error }] = useLoginMutation();
+  const { register, handleSubmit } = useForm(
+    {
+      defaultValues: {
+       id: "0001",
+        password: "admin12345",
+        },
+      }
+  );
+  const [login] = useLoginMutation();
 
   // console.log("data=>", data);
   // console.log("error=>", error);
 
-  const onSubmit = async (data) => {
-    const userInfo = {
-      id: data.id,
-      password: data.password,
-    };
-    // console.log(userInfo);
+  const onSubmit = async (data:FieldValues) => {
+    const loadingToastId = toast.loading("Logging in");
 
-    const res = await login(userInfo).unwrap();
 
-    const user = verifyToken(res.data.accessToken)
+    try {
+      const userInfo = {
+        id: data.id,
+        password: data.password,
+      };
+      // console.log(userInfo);
 
-    dispatch(setUser({ user: user, token: res.data.accessToken }));
+      const res = await login(userInfo).unwrap();
+
+      const user = verifyToken(res.data.accessToken) as TUser;
+
+      dispatch(setUser({ user: user, token: res.data.accessToken }));
+      toast.dismiss(loadingToastId)
+      toast.success("Logged in successfully")
+      // navigate(`/${user.role}/dashboard`)
+      navigate('/');
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    } catch (err) {
+      toast.dismiss(loadingToastId)
+      toast.error("Something went wrong!!");
+    }
+
 
     // console.log(res);
   };
