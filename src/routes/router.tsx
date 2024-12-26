@@ -10,13 +10,15 @@ import { facultyPaths } from "./faculty.routes";
 import { studentPaths } from "./student.routes";
 
 
+ 
+
 const router = createBrowserRouter([
   {
     path: "/",
     element: <App />,
   },
   {
-    path: "/admin",
+    path: "/superAdmin",
     element: <App />,
     children: routerGenerator(adminPaths),
   },
